@@ -1,0 +1,1027 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Bankai conecta clientes con prestadores de servicios a domicilio verificados. Publicá lo que necesitás y recibí ofertas de socios de tu zona.">
+<meta name="theme-color" content="#1C1008">
+<meta property="og:title" content="Bankai — Servicios a domicilio">
+<meta property="og:description" content="Alguien que sabe, a la puerta de tu casa. Socios con identidad verificada contra RENAPER.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔧</text></svg>">
+<title>Bankai</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap">
+
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   Bankai — sitio público
+   Marketplace de dos lados, así que la página tiene dos modos.
+   El selector no cambia sólo el texto: cambia el acento de todo
+   el sitio. Terracota = quien contrata. Verde = quien trabaja.
+   ═══════════════════════════════════════════════════════════════ */
+:root {
+  --ink:      #1C1008;
+  --ink-2:    #2E1F14;
+  --cream:    #FAF6F1;
+  --paper:    #FFFFFF;
+  --line:     #EDE0D4;
+  --mute:     #9B8070;
+  --faint:    #C4A99A;
+
+  --accent:      #C4622D;
+  --accent-lift: #E8956D;
+  --accent-deep: #A04D1F;
+  --accent-wash: rgba(196, 98, 45, .09);
+  --accent-edge: rgba(196, 98, 45, .22);
+
+  --measure: 62ch;
+}
+
+[data-mode="socio"] {
+  --accent:      #4A7C59;
+  --accent-lift: #8FC49F;
+  --accent-deep: #3A6347;
+  --accent-wash: rgba(74, 124, 89, .1);
+  --accent-edge: rgba(74, 124, 89, .24);
+}
+
+/* Página de marca: se compromete con un solo mundo cálido y pinta
+   todos los colores, así se sostiene sobre cualquier fondo anfitrión. */
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0; background: var(--cream); color: var(--ink);
+  font-family: "Instrument Sans", system-ui, sans-serif;
+  font-size: 17px; line-height: 1.62;
+  -webkit-font-smoothing: antialiased; overflow-x: hidden;
+}
+
+h1, h2, h3, .display {
+  font-family: "Bricolage Grotesque", system-ui, sans-serif;
+  font-weight: 800; letter-spacing: -0.038em; line-height: 1.02;
+  margin: 0; text-wrap: balance;
+}
+
+.shell { max-width: 1160px; margin: 0 auto; padding: 0 28px; }
+.narrow { max-width: 780px; }
+
+/* ── Barra ──────────────────────────────────────────────────── */
+.bar {
+  position: sticky; top: 0; z-index: 60;
+  background: rgba(250,246,241,.9); backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--line);
+}
+.bar-in {
+  max-width: 1160px; margin: 0 auto; padding: 13px 28px;
+  display: flex; align-items: center; gap: 18px;
+}
+
+/* Una sola palabra: el nombre no se parte. */
+.logo {
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-size: 23px; font-weight: 800; letter-spacing: -0.05em;
+  display: flex; align-items: center; gap: 8px; white-space: nowrap;
+}
+.logo .glyph {
+  width: 27px; height: 27px; border-radius: 8px; flex-shrink: 0;
+  background: var(--accent); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; transition: background .45s ease;
+}
+
+.switch {
+  margin-left: auto; display: flex; padding: 3px; gap: 2px;
+  background: var(--paper); border: 1px solid var(--line); border-radius: 100px;
+}
+.switch button {
+  font-family: inherit; font-size: 13.5px; font-weight: 600;
+  padding: 7px 15px; border-radius: 100px; border: 0;
+  background: transparent; color: var(--mute); cursor: pointer; white-space: nowrap;
+  transition: background .3s ease, color .3s ease;
+}
+.switch button[aria-pressed="true"] { background: var(--accent); color: #fff; }
+.switch button:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+
+/* ── Hero ───────────────────────────────────────────────────── */
+.hero {
+  background: var(--ink); color: var(--cream);
+  padding: 70px 0 0; overflow: hidden; position: relative;
+}
+.hero::before {
+  content: ""; position: absolute; inset: 0;
+  background:
+    radial-gradient(70% 55% at 76% 4%, var(--accent-wash) 0%, transparent 60%),
+    radial-gradient(50% 40% at 8% 92%, var(--accent-wash) 0%, transparent 62%);
+  transition: background .5s ease;
+}
+/* Retícula tenue: da profundidad sin competir con el texto. */
+.hero::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(250,246,241,.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(250,246,241,.028) 1px, transparent 1px);
+  background-size: 62px 62px;
+  mask-image: radial-gradient(72% 62% at 50% 34%, #000 0%, transparent 78%);
+}
+.hero-grid {
+  position: relative; display: grid;
+  grid-template-columns: 1.08fr .92fr; gap: 48px; align-items: end;
+}
+.hero-copy { padding-bottom: 72px; }
+
+.tagline {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 12.5px; font-weight: 600; letter-spacing: .03em;
+  padding: 6px 14px; border-radius: 100px;
+  border: 1px solid rgba(250,246,241,.2);
+  color: var(--accent-lift); margin-bottom: 24px; transition: color .45s ease;
+}
+.tagline b {
+  width: 6px; height: 6px; border-radius: 100px; background: var(--accent-lift);
+  transition: background .45s ease;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .tagline b { animation: pulse 2.4s ease-in-out infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .35; } }
+}
+
+h1 { font-size: clamp(44px, 7.4vw, 88px); margin-bottom: 22px; }
+h1 em { font-style: normal; color: var(--accent-lift); transition: color .45s ease; }
+
+.hero-lede {
+  font-size: 19px; line-height: 1.55; color: rgba(250,246,241,.74);
+  max-width: 45ch; margin: 0 0 30px;
+}
+.cta-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.cta {
+  font-family: inherit; font-size: 15.5px; font-weight: 600;
+  padding: 15px 30px; border-radius: 100px;
+  background: var(--accent); color: #fff; border: 0; cursor: pointer;
+  text-decoration: none; display: inline-block;
+  transition: background .45s ease, transform .15s ease, box-shadow .2s ease;
+  box-shadow: 0 5px 20px -6px var(--accent);
+}
+.cta:hover { transform: translateY(-2px); box-shadow: 0 10px 28px -8px var(--accent); }
+.cta.ghost {
+  background: transparent; color: var(--cream);
+  border: 1.5px solid rgba(250,246,241,.28); box-shadow: none;
+}
+.cta:focus-visible { outline: 2px solid var(--accent-lift); outline-offset: 3px; }
+
+/* Contadores del hero */
+.metrics {
+  display: flex; gap: 30px; flex-wrap: wrap;
+  margin-top: 40px; padding-top: 28px;
+  border-top: 1px solid rgba(250,246,241,.13);
+}
+.metric b {
+  display: block; font-family: "Bricolage Grotesque", sans-serif;
+  font-size: 33px; font-weight: 800; letter-spacing: -.03em;
+  font-variant-numeric: tabular-nums; line-height: 1;
+}
+.metric span { font-size: 12.5px; color: rgba(250,246,241,.55); }
+
+/* Teléfono */
+.stage { display: flex; justify-content: center; align-items: flex-end; }
+.phone {
+  width: 274px; height: 512px; flex-shrink: 0; background: var(--cream);
+  border: 8px solid #0F0A06; border-bottom: 0; border-radius: 34px 34px 0 0;
+  box-shadow: 0 -10px 70px rgba(0,0,0,.45); overflow: hidden; position: relative;
+  font-family: system-ui, -apple-system, sans-serif; color: var(--ink);
+  font-size: 13px; line-height: 1.5;
+}
+.phone-notch { height: 22px; display: flex; align-items: center; justify-content: center; }
+.phone-notch::after { content: ""; width: 66px; height: 5px; background: #0F0A06; border-radius: 100px; }
+.phone-body { padding: 6px 15px; }
+
+.demo-step { display: none; animation: rise .4s ease both; }
+.demo-step[data-on] { display: block; }
+@keyframes rise { from { opacity: 0; transform: translateY(9px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .demo-step { animation: none; }
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1 !important; transform: none !important; }
+}
+
+.ph-h { font-size: 17px; font-weight: 800; letter-spacing: -.3px; margin-bottom: 3px; }
+.ph-sub { font-size: 11px; color: var(--mute); margin-bottom: 13px; }
+.ph-card { background: var(--paper); border: 1px solid var(--line); border-radius: 14px; padding: 11px; margin-bottom: 8px; }
+.ph-card.hi { border-color: var(--accent); border-width: 1.5px; transition: border-color .45s ease; }
+.ph-row { display: flex; align-items: center; gap: 9px; }
+.ph-grow { flex: 1; min-width: 0; }
+.ph-av {
+  width: 36px; height: 36px; border-radius: 100px; flex-shrink: 0;
+  background: var(--accent); color: #fff; font-size: 12px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center; transition: background .45s ease;
+}
+.ph-name { font-size: 12.5px; font-weight: 700; }
+.ph-meta { font-size: 10px; color: var(--mute); }
+.ph-price { font-size: 16px; font-weight: 800; color: var(--accent); transition: color .45s ease; }
+.ph-btn {
+  background: var(--accent); color: #fff; border-radius: 100px; padding: 10px;
+  text-align: center; font-size: 12px; font-weight: 700; margin-top: 9px;
+  transition: background .45s ease;
+}
+.ph-pill {
+  font-size: 9px; font-weight: 700; padding: 3px 8px; border-radius: 100px;
+  background: rgba(34,197,94,.11); border: 1px solid rgba(34,197,94,.3); color: #16A34A;
+}
+.ph-cats { display: flex; flex-wrap: wrap; gap: 10px 0; }
+.ph-cat { width: 25%; text-align: center; }
+.ph-cat b {
+  display: flex; width: 42px; height: 42px; margin: 0 auto 5px; border-radius: 13px;
+  align-items: center; justify-content: center; font-size: 19px; font-weight: 400;
+  background: var(--accent-wash); transition: background .45s ease;
+}
+.ph-cat span { font-size: 8.5px; font-weight: 600; color: #5C4033; line-height: 1.2; display: block; }
+.ph-code { background: var(--ink); border-radius: 16px; padding: 16px; text-align: center; margin-bottom: 10px; }
+.ph-code u { display: block; text-decoration: none; font-size: 8px; font-weight: 800; letter-spacing: 1.2px; color: rgba(255,255,255,.55); }
+.ph-code b { display: block; font-size: 34px; font-weight: 900; letter-spacing: 9px; color: #fff; margin: 4px 0 5px 9px; }
+.ph-code span { font-size: 9px; color: rgba(255,255,255,.62); line-height: 1.35; display: block; }
+
+.dots { display: flex; gap: 7px; justify-content: center; padding: 20px 0 24px; }
+.dots button {
+  width: 7px; height: 7px; padding: 0; border-radius: 100px; border: 0;
+  background: rgba(250,246,241,.26); cursor: pointer;
+  transition: background .3s ease, width .3s ease;
+}
+.dots button[aria-current="true"] { background: var(--accent-lift); width: 22px; }
+.dots button:focus-visible { outline: 2px solid var(--accent-lift); outline-offset: 3px; }
+
+/* ── Secciones ──────────────────────────────────────────────── */
+section { padding: 86px 0; }
+.eyebrow {
+  font-size: 12px; font-weight: 600; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--accent); margin: 0 0 14px;
+  transition: color .45s ease;
+}
+h2 { font-size: clamp(32px, 4.8vw, 52px); margin-bottom: 18px; }
+.sec-lede { font-size: 18px; color: var(--mute); max-width: var(--measure); margin: 0 0 44px; }
+
+.reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
+.reveal.seen { opacity: 1; transform: none; }
+
+/* Pasos */
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; counter-reset: s; }
+.step {
+  background: var(--paper); border: 1px solid var(--line); border-radius: 20px;
+  padding: 28px 24px; counter-increment: s; transition: border-color .3s ease, transform .3s ease;
+}
+.step:hover { border-color: var(--accent-edge); transform: translateY(-3px); }
+.step::before {
+  content: counter(s, decimal-leading-zero);
+  font-family: "Bricolage Grotesque", sans-serif; font-size: 13px; font-weight: 700;
+  color: var(--accent); display: block; margin-bottom: 14px; transition: color .45s ease;
+}
+.step h3 { font-size: 20px; margin-bottom: 8px; }
+.step p { margin: 0; font-size: 15px; color: var(--mute); line-height: 1.55; }
+
+/* Buscador de rubros */
+.finder {
+  background: var(--paper); border: 1px solid var(--line);
+  border-radius: 22px; padding: 26px;
+}
+.finder-in {
+  display: flex; align-items: center; gap: 11px;
+  background: var(--cream); border: 1.5px solid var(--line);
+  border-radius: 100px; padding: 4px 4px 4px 20px; margin-bottom: 20px;
+  transition: border-color .3s ease;
+}
+.finder-in:focus-within { border-color: var(--accent); }
+.finder-in span { font-size: 17px; }
+.finder-in input {
+  flex: 1; border: 0; background: transparent; padding: 13px 0;
+  font-family: inherit; font-size: 16px; color: var(--ink); min-width: 0;
+}
+.finder-in input:focus { outline: none; }
+.finder-in input::placeholder { color: var(--faint); }
+.finder-go {
+  border: 0; border-radius: 100px; padding: 12px 22px; cursor: pointer;
+  font-family: inherit; font-size: 14.5px; font-weight: 600;
+  background: var(--accent); color: #fff; white-space: nowrap;
+  transition: background .45s ease;
+}
+.finder-go:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+
+.cat-cloud { display: flex; flex-wrap: wrap; gap: 9px; }
+.cat-chip {
+  background: var(--cream); border: 1px solid var(--line); border-radius: 100px;
+  padding: 9px 17px; font-size: 14.5px; font-weight: 500;
+  display: flex; align-items: center; gap: 7px;
+  transition: background .2s ease, border-color .2s ease, color .2s ease;
+}
+.cat-chip.hit { background: var(--accent); border-color: var(--accent); color: #fff; }
+.cat-chip.dim { opacity: .3; }
+.finder-none { font-size: 15px; color: var(--mute); margin: 4px 0 0; }
+
+/* Seguridad */
+.trust { background: var(--ink); color: var(--cream); }
+.trust h2 { color: var(--cream); }
+.trust .sec-lede { color: rgba(250,246,241,.68); }
+.trust .eyebrow { color: var(--accent-lift); }
+.shields { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+.shield {
+  border: 1px solid rgba(250,246,241,.13); border-radius: 20px;
+  padding: 28px 26px; background: rgba(250,246,241,.03);
+  transition: border-color .3s ease, background .3s ease;
+}
+.shield:hover { border-color: var(--accent-edge); background: rgba(250,246,241,.055); }
+.shield .mark {
+  width: 42px; height: 42px; border-radius: 13px; background: var(--accent-wash);
+  border: 1px solid var(--accent-edge); display: flex; align-items: center;
+  justify-content: center; font-size: 20px; margin-bottom: 16px;
+  transition: background .45s ease, border-color .45s ease;
+}
+.shield h3 { font-size: 19px; margin-bottom: 8px; color: var(--cream); }
+.shield p { margin: 0; font-size: 15px; color: rgba(250,246,241,.66); line-height: 1.55; }
+
+/* Testimonios */
+.voices { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.voice {
+  background: var(--paper); border: 1px solid var(--line);
+  border-radius: 20px; padding: 24px;
+}
+.voice .stars { color: #F59E0B; font-size: 14px; letter-spacing: 2px; margin-bottom: 12px; }
+.voice p { margin: 0 0 16px; font-size: 15.5px; line-height: 1.55; }
+.voice .who { display: flex; align-items: center; gap: 10px; }
+.voice .who b {
+  width: 36px; height: 36px; border-radius: 100px; flex-shrink: 0;
+  background: var(--accent); color: #fff; font-size: 13px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .45s ease;
+}
+.voice .who div { font-size: 13.5px; }
+.voice .who span { display: block; font-size: 12.5px; color: var(--mute); }
+
+/* Calculadora */
+.calc {
+  background: var(--paper); border: 1px solid var(--line); border-radius: 22px;
+  padding: 32px; display: grid; grid-template-columns: 1fr 1fr; gap: 36px; align-items: center;
+}
+.calc-controls { display: flex; flex-direction: column; gap: 26px; }
+.ctrl label { display: flex; justify-content: space-between; align-items: baseline; font-size: 14.5px; font-weight: 600; margin-bottom: 10px; }
+.ctrl label b {
+  font-family: "Bricolage Grotesque", sans-serif; font-size: 20px; font-weight: 700;
+  color: var(--accent); font-variant-numeric: tabular-nums; transition: color .45s ease;
+}
+input[type="range"] { width: 100%; height: 5px; border-radius: 100px; appearance: none; background: var(--line); cursor: pointer; }
+input[type="range"]::-webkit-slider-thumb {
+  appearance: none; width: 22px; height: 22px; border-radius: 100px;
+  background: var(--accent); border: 3px solid var(--paper);
+  box-shadow: 0 1px 5px rgba(28,16,8,.24); transition: background .45s ease;
+}
+input[type="range"]::-moz-range-thumb {
+  width: 22px; height: 22px; border-radius: 100px; border: 3px solid var(--paper);
+  background: var(--accent); box-shadow: 0 1px 5px rgba(28,16,8,.24);
+}
+input[type="range"]:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.calc-out { background: var(--ink); border-radius: 18px; padding: 28px; color: var(--cream); }
+.calc-out .lbl { font-size: 11.5px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: rgba(250,246,241,.55); }
+.calc-out .big {
+  font-family: "Bricolage Grotesque", sans-serif; font-size: clamp(34px, 4.6vw, 48px);
+  font-weight: 800; letter-spacing: -.03em; margin: 5px 0 3px; font-variant-numeric: tabular-nums;
+}
+.calc-line {
+  display: flex; justify-content: space-between; align-items: baseline;
+  font-size: 14.5px; padding: 11px 0; border-top: 1px solid rgba(250,246,241,.13);
+  color: rgba(250,246,241,.72);
+}
+.calc-line b { font-variant-numeric: tabular-nums; font-weight: 600; color: var(--cream); }
+.calc-note { font-size: 13px; color: rgba(250,246,241,.5); margin: 14px 0 0; line-height: 1.5; }
+
+/* Preguntas */
+.faq { max-width: 800px; }
+details {
+  border-bottom: 1px solid var(--line); padding: 4px 0;
+}
+details summary {
+  cursor: pointer; list-style: none; padding: 18px 0;
+  font-size: 18px; font-weight: 600; display: flex;
+  align-items: center; justify-content: space-between; gap: 16px;
+}
+details summary::-webkit-details-marker { display: none; }
+details summary::after {
+  content: "+"; font-size: 25px; font-weight: 400; color: var(--accent);
+  line-height: 1; flex-shrink: 0; transition: transform .25s ease, color .45s ease;
+}
+details[open] summary::after { transform: rotate(45deg); }
+details summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+details p { margin: 0 0 20px; color: var(--mute); font-size: 16px; max-width: 66ch; }
+
+/* Cierre */
+.close-band {
+  background: var(--accent); color: #fff; border-radius: 28px;
+  padding: 60px 44px; text-align: center; transition: background .45s ease;
+}
+.close-band h2 { color: #fff; max-width: 19ch; margin: 0 auto 16px; }
+.close-band p { color: rgba(255,255,255,.85); font-size: 18px; max-width: 52ch; margin: 0 auto 30px; }
+.close-band .cta {
+  background: var(--ink); color: var(--cream); box-shadow: 0 6px 22px rgba(28,16,8,.28);
+}
+
+footer { border-top: 1px solid var(--line); padding: 40px 0; font-size: 14px; color: var(--mute); }
+.foot-in { display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; align-items: center; }
+
+[data-only="cliente"], [data-only="socio"] { display: none; }
+[data-mode="cliente"] [data-only="cliente"] { display: revert; }
+[data-mode="socio"]   [data-only="socio"]   { display: revert; }
+[data-mode="cliente"] .steps[data-only="cliente"],
+[data-mode="socio"]   .steps[data-only="socio"] { display: grid; }
+[data-mode="socio"]   .calc[data-only="socio"] { display: grid; }
+[data-mode="cliente"] .voices[data-only="cliente"],
+[data-mode="socio"]   .voices[data-only="socio"] { display: grid; }
+
+@media (max-width: 960px) {
+  .hero-grid { grid-template-columns: 1fr; gap: 0; }
+  .hero-copy { padding-bottom: 36px; }
+  .steps, .shields, .voices { grid-template-columns: 1fr; }
+  .calc { grid-template-columns: 1fr; gap: 28px; padding: 24px; }
+}
+@media (max-width: 560px) {
+  .shell { padding: 0 20px; }
+  .bar-in { padding: 11px 20px; gap: 10px; }
+  .logo { font-size: 19px; }
+  .switch button { padding: 6px 11px; font-size: 12.5px; }
+  section { padding: 58px 0; }
+  .hero { padding-top: 44px; }
+  .metrics { gap: 22px; }
+  .close-band { padding: 40px 24px; }
+  .finder { padding: 20px; }
+  .finder-in { padding-left: 16px; }
+}
+</style>
+</head>
+<body>
+
+
+<div class="bar">
+  <div class="bar-in">
+    <div class="logo"><span class="glyph">🔧</span>Bankai</div>
+    <div class="switch" role="group" aria-label="Elegí cómo vas a usar Bankai">
+      <button type="button" data-set="cliente" aria-pressed="true">Necesito un servicio</button>
+      <button type="button" data-set="socio" aria-pressed="false">Quiero trabajar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ HERO ══════════════ -->
+<header class="hero">
+  <div class="shell hero-grid">
+    <div class="hero-copy">
+      <span class="tagline"><b></b><span data-only="cliente">Electricistas, plomeros, peluqueros y más</span><span data-only="socio">Sumate como socio de Bankai</span></span>
+
+      <h1>
+        <span data-only="cliente">Alguien que sabe,<br><em>a la puerta de tu casa.</em></span>
+        <span data-only="socio">Tu oficio,<br><em>con clientes cerca.</em></span>
+      </h1>
+
+      <p class="hero-lede">
+        <span data-only="cliente">
+          Publicás lo que necesitás, los socios de tu zona te mandan su precio,
+          y elegís vos. Todos con identidad verificada contra RENAPER.
+        </span>
+        <span data-only="socio">
+          Recibís pedidos de tu barrio, ponés tu precio y cobrás como quieras.
+          Sin cuota mensual: Bankai cobra sólo cuando vos cobrás.
+        </span>
+      </p>
+
+      <div class="cta-row">
+        <a class="cta" href="#como"><span data-only="cliente">Ver cómo funciona</span><span data-only="socio">Empezar a trabajar</span></a>
+        <a class="cta ghost" href="#seguridad">Cómo cuidamos que salga bien</a>
+      </div>
+
+      <div class="metrics">
+        <div class="metric"><b data-count="18">0</b><span>Rubros disponibles</span></div>
+        <div class="metric"><b data-count="100" data-suffix="%">0</b><span>Socios verificados</span></div>
+        <div class="metric"><b data-count="0" data-prefix="$">0</b><span>Publicar un pedido</span></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="stage">
+        <div class="phone">
+          <div class="phone-notch"></div>
+          <div class="phone-body">
+
+            <div class="demo-step" data-step="0" data-on>
+              <div class="ph-h">Hola, Maxi 👋</div>
+              <div class="ph-sub">¿Qué necesitás hoy?</div>
+              <div class="ph-cats">
+                <div class="ph-cat"><b>⚡</b><span>Electricista</span></div>
+                <div class="ph-cat"><b>🔧</b><span>Plomería</span></div>
+                <div class="ph-cat"><b>💇</b><span>Peluquería</span></div>
+                <div class="ph-cat"><b>💅</b><span>Manicura</span></div>
+                <div class="ph-cat"><b>🎨</b><span>Pintura</span></div>
+                <div class="ph-cat"><b>🧹</b><span>Limpieza</span></div>
+                <div class="ph-cat"><b>🪚</b><span>Carpintería</span></div>
+                <div class="ph-cat"><b>🌿</b><span>Jardinería</span></div>
+              </div>
+            </div>
+
+            <div class="demo-step" data-step="1">
+              <div class="ph-h">Ofertas recibidas</div>
+              <div class="ph-sub">Cambio de tablero · Vicente López</div>
+              <div class="ph-card hi">
+                <div class="ph-row">
+                  <div class="ph-av">MG</div>
+                  <div class="ph-grow">
+                    <div class="ph-name">Miguel Godoy 🪪</div>
+                    <div class="ph-meta">⭐ 4.8 (23 reseñas) · 31 trabajos</div>
+                  </div>
+                  <div class="ph-price">$18.500</div>
+                </div>
+                <div class="ph-btn">Aceptar esta oferta →</div>
+              </div>
+              <div class="ph-card">
+                <div class="ph-row">
+                  <div class="ph-av" style="background:#5B8FB9">RG</div>
+                  <div class="ph-grow">
+                    <div class="ph-name">Ricardo Gómez</div>
+                    <div class="ph-meta">⭐ 4.6 (11 reseñas) · 14 trabajos</div>
+                  </div>
+                  <div class="ph-price">$21.000</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="demo-step" data-step="2">
+              <div class="ph-h">Tu turno activo</div>
+              <div class="ph-sub">Miguel está en camino</div>
+              <div class="ph-code">
+                <u>TU CÓDIGO DE SEGURIDAD</u>
+                <b>4821</b>
+                <span>Decíselo recién cuando esté en tu puerta.</span>
+              </div>
+              <div class="ph-card">
+                <div class="ph-row">
+                  <div class="ph-av">MG</div>
+                  <div class="ph-grow">
+                    <div class="ph-name">Miguel Godoy</div>
+                    <div class="ph-meta">Llega aprox. 15:30</div>
+                  </div>
+                  <span class="ph-pill">En camino</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="demo-step" data-step="3">
+              <div class="ph-h">Servicio completado</div>
+              <div class="ph-sub">¿Cómo estuvo el trabajo?</div>
+              <div class="ph-card">
+                <div class="ph-row">
+                  <div class="ph-av">MG</div>
+                  <div class="ph-grow">
+                    <div class="ph-name">Miguel Godoy</div>
+                    <div class="ph-meta">⚡ Electricista</div>
+                  </div>
+                </div>
+                <div style="text-align:center;font-size:26px;letter-spacing:5px;color:#F59E0B;margin:13px 0 4px">★★★★★</div>
+                <div style="text-align:center;font-size:11px;color:var(--mute)">Excelente trabajo</div>
+                <div class="ph-btn">Enviar reseña</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="dots" role="tablist" aria-label="Pasos del recorrido">
+        <button type="button" data-go="0" aria-current="true" aria-label="Elegir categoría"></button>
+        <button type="button" data-go="1" aria-current="false" aria-label="Recibir ofertas"></button>
+        <button type="button" data-go="2" aria-current="false" aria-label="Seguir el trabajo"></button>
+        <button type="button" data-go="3" aria-current="false" aria-label="Calificar"></button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ══════════════ CÓMO FUNCIONA ══════════════ -->
+<section id="como">
+  <div class="shell reveal">
+    <p class="eyebrow">Cómo funciona</p>
+    <h2 data-only="cliente">Tres pasos, sin llamar a nadie.</h2>
+    <h2 data-only="socio">Vos elegís qué tomar y a qué precio.</h2>
+    <p class="sec-lede">
+      <span data-only="cliente">
+        No hay que pedir presupuestos por teléfono ni esperar a que alguien
+        conteste. Publicás una vez y te llegan las ofertas.
+      </span>
+      <span data-only="socio">
+        Nadie te asigna trabajos ni te obliga a aceptar. Ves el pedido,
+        decidís si te sirve, y ponés tu precio.
+      </span>
+    </p>
+
+    <div class="steps" data-only="cliente">
+      <div class="step">
+        <h3>Contá qué necesitás</h3>
+        <p>Elegís el rubro y describís el trabajo. Podés pedirlo para ahora o agendarlo hasta 30 días adelante.</p>
+      </div>
+      <div class="step">
+        <h3>Compará las ofertas</h3>
+        <p>Los socios disponibles de tu zona te mandan su precio. Ves su calificación, cuántos trabajos hizo y qué dijeron otros clientes.</p>
+      </div>
+      <div class="step">
+        <h3>Seguilo hasta el final</h3>
+        <p>Chateás, seguís su llegada y pagás con tarjeta, MercadoPago o efectivo cuando el trabajo esté hecho.</p>
+      </div>
+    </div>
+
+    <div class="steps" data-only="socio">
+      <div class="step">
+        <h3>Verificá tu identidad</h3>
+        <p>Una selfie y tu DNI. Validamos contra RENAPER. Es lo que hace que un cliente confíe en abrirte la puerta.</p>
+      </div>
+      <div class="step">
+        <h3>Cargá tus rubros</h3>
+        <p>Elegís en qué trabajás y desde qué precio. Activás tu disponibilidad cuando querés recibir pedidos.</p>
+      </div>
+      <div class="step">
+        <h3>Ofertá y cobrá</h3>
+        <p>Te llegan los pedidos de tu zona. Mandás tu precio, y si te eligen, cobrás por donde prefieras.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ BUSCADOR DE RUBROS ══════════════ -->
+<section style="padding-top:0">
+  <div class="shell reveal">
+    <p class="eyebrow">Rubros</p>
+    <h2 data-only="cliente">Buscá lo que necesitás.</h2>
+    <h2 data-only="socio">Fijate si tu oficio está.</h2>
+    <p class="sec-lede">
+      <span data-only="cliente">Escribí el problema y te decimos con qué rubro se resuelve.</span>
+      <span data-only="socio">18 rubros activos, y sumamos más a medida que llegan socios.</span>
+    </p>
+
+    <div class="finder">
+      <form class="finder-in" id="finder" autocomplete="off">
+        <span aria-hidden="true">🔍</span>
+        <input type="search" id="q" aria-label="Buscar un rubro"
+               placeholder="Probá: gotera, tablero, corte de pelo…">
+        <button class="finder-go" type="submit">Buscar</button>
+      </form>
+      <div class="cat-cloud" id="cloud"></div>
+      <p class="finder-none" id="none" hidden>
+        No encontramos ese rubro todavía. Escribinos y lo sumamos.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ SEGURIDAD ══════════════ -->
+<section class="trust" id="seguridad">
+  <div class="shell reveal">
+    <p class="eyebrow">Seguridad</p>
+    <h2 data-only="cliente">Estás dejando entrar a alguien a tu casa.</h2>
+    <h2 data-only="socio">Vas a entrar a la casa de un desconocido.</h2>
+    <p class="sec-lede">
+      <span data-only="cliente">Eso no es una transacción cualquiera, y no lo tratamos como tal.</span>
+      <span data-only="socio">Las mismas protecciones que cuidan al cliente te cuidan a vos.</span>
+    </p>
+
+    <div class="shields">
+      <div class="shield">
+        <div class="mark">🪪</div>
+        <h3>Identidad validada contra RENAPER</h3>
+        <p>
+          Ningún socio puede recibir pedidos sin pasar por documento, prueba de
+          vida y validación contra el registro nacional. La cara frente a la
+          cámara tiene que ser la del DNI.
+        </p>
+      </div>
+      <div class="shield">
+        <div class="mark">🔢</div>
+        <h3>Código de llegada</h3>
+        <p>
+          Cuando el socio toca timbre, el cliente le dicta cuatro dígitos que
+          sólo él ve. Sin ese código el trabajo no puede empezar. Convierte
+          “vino alguien” en “vino quien contraté”.
+        </p>
+      </div>
+      <div class="shield">
+        <div class="mark">💳</div>
+        <h3>El pago queda adentro</h3>
+        <p>
+          Se paga por la app, y el efectivo necesita que las dos partes
+          confirmen. Si alguien propone arreglar por fuera, se denuncia con un
+          toque: ahí es donde se pierden las garantías de ambos.
+        </p>
+      </div>
+      <div class="shield">
+        <div class="mark">🆘</div>
+        <h3>Botón de emergencia</h3>
+        <p>
+          Durante un servicio, cualquiera de los dos puede activarlo. Queda
+          registrada la ubicación y los datos de la otra parte, y avisa al
+          equipo en el momento.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ══════════════ COMPROMISOS ══════════════ -->
+<section>
+  <div class="shell reveal">
+    <p class="eyebrow">Nuestro compromiso</p>
+    <h2 data-only="cliente">Bankai reci&eacute;n arranca.</h2>
+    <h2 data-only="socio">Ent&aacute;s temprano.</h2>
+    <p class="sec-lede">
+      <span data-only="cliente">
+        Todav&iacute;a no tenemos miles de rese&ntilde;as para mostrarte, y no vamos a inventarlas.
+        Lo que s&iacute; tenemos es c&oacute;mo decidimos construir esto.
+      </span>
+      <span data-only="socio">
+        Somos nuevos, y eso te conviene: los primeros socios agarran los pedidos
+        sin competencia y construyen su reputaci&oacute;n desde cero.
+      </span>
+    </p>
+
+    <div class="steps" data-only="cliente">
+      <div class="step">
+        <h3>Nadie trabaja sin verificarse</h3>
+        <p>No hay excepciones ni per&iacute;odo de gracia. Un socio sin identidad validada contra RENAPER no puede recibir un solo pedido.</p>
+      </div>
+      <div class="step">
+        <h3>Las rese&ntilde;as son de servicios reales</h3>
+        <p>Solo pod&eacute;s calificar un trabajo que contrataste y se complet&oacute;. No se compran, no se piden, no se borran las malas.</p>
+      </div>
+      <div class="step">
+        <h3>El precio lo pon&eacute;s vos</h3>
+        <p>Los socios compiten por tu trabajo, no al rev&eacute;s. Ves todas las ofertas y eleg&iacute;s: la m&aacute;s barata, la mejor puntuada, o ninguna.</p>
+      </div>
+    </div>
+
+    <div class="steps" data-only="socio">
+      <div class="step">
+        <h3>Sin exclusividad</h3>
+        <p>Segu&iacute; con tus clientes de siempre. Bankai es un canal m&aacute;s, no un patr&oacute;n.</p>
+      </div>
+      <div class="step">
+        <h3>Sin algoritmo que te castigue</h3>
+        <p>Rechazar un pedido no te baja el ranking. Lo que cuenta es c&oacute;mo trabaj&aacute;s, no cu&aacute;nto acept&aacute;s.</p>
+      </div>
+      <div class="step">
+        <h3>La comisi&oacute;n no sube sola</h3>
+        <p>10% los primeros tres meses, 13% despu&eacute;s. Si alguna vez cambia, te avisamos antes, no con un correo despu&eacute;s.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ══════════════ CALCULADORA ══════════════ -->
+<section data-only="socio" style="padding-top:0">
+  <div class="shell reveal">
+    <p class="eyebrow">Cuánto queda para vos</p>
+    <h2>Sin cuota. Bankai cobra sólo si cobrás.</h2>
+    <p class="sec-lede">
+      La comisión es 10% durante tus primeros tres meses y 13% después.
+      Moví los controles para ver qué te queda.
+    </p>
+    <div class="calc" data-only="socio">
+      <div class="calc-controls">
+        <div class="ctrl">
+          <label for="jobs">Trabajos por semana <b><span id="jobs-v">8</span></b></label>
+          <input type="range" id="jobs" min="1" max="30" value="8">
+        </div>
+        <div class="ctrl">
+          <label for="ticket">Precio promedio <b>$<span id="ticket-v">15.000</span></b></label>
+          <input type="range" id="ticket" min="3000" max="60000" step="1000" value="15000">
+        </div>
+        <div class="ctrl">
+          <label for="months">Meses en Bankai <b><span id="months-v">1</span></b></label>
+          <input type="range" id="months" min="1" max="12" value="1">
+        </div>
+      </div>
+      <div class="calc-out">
+        <div class="lbl">Te queda por mes</div>
+        <div class="big">$<span id="net">468.000</span></div>
+        <div class="calc-line"><span>Facturado</span><b>$<span id="gross">520.000</span></b></div>
+        <div class="calc-line"><span>Comisión Bankai (<span id="rate">10</span>%)</span><b>−$<span id="fee">52.000</span></b></div>
+        <p class="calc-note" id="note">Primeros 3 meses con comisión reducida del 10%.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ PREGUNTAS ══════════════ -->
+<section style="padding-top:0">
+  <div class="shell reveal">
+    <p class="eyebrow">Preguntas</p>
+    <h2>Lo que más nos preguntan.</h2>
+    <div class="faq" style="margin-top:36px">
+
+      <details data-only="cliente" open>
+        <summary>¿Cuánto cuesta publicar un pedido?</summary>
+        <p>Nada. Publicar es gratis y no te compromete: recibís las ofertas y decidís si contratás o no. Sólo pagás el trabajo, al socio que elijas.</p>
+      </details>
+      <details data-only="cliente">
+        <summary>¿Cómo sé que el socio es quien dice ser?</summary>
+        <p>Todos pasan por validación de identidad contra RENAPER: documento, prueba de vida y coincidencia facial. Además, cuando llega a tu casa tenés que darle un código de cuatro dígitos que sólo vos ves, sin el cual no puede iniciar el trabajo.</p>
+      </details>
+      <details data-only="cliente">
+        <summary>¿Y si el trabajo sale mal?</summary>
+        <p>Podés abrir un reclamo desde la app antes de que se cierre el servicio. El equipo revisa el caso con el historial, los mensajes y las fotos que subas.</p>
+      </details>
+      <details data-only="cliente">
+        <summary>¿Puedo pagar en efectivo?</summary>
+        <p>Sí. También con tarjeta o MercadoPago. Si es en efectivo, las dos partes tienen que confirmar el pago en la app, así queda constancia para ambos.</p>
+      </details>
+      <details data-only="cliente">
+        <summary>¿En qué zonas funciona?</summary>
+        <p>Arrancamos en AMBA. Cada socio define su zona de cobertura, así que la disponibilidad depende de dónde estés. Si publicás y no hay nadie cerca, no se te cobra nada.</p>
+      </details>
+
+      <details data-only="socio" open>
+        <summary>¿Tengo que pagar para registrarme?</summary>
+        <p>No. Crear el perfil, verificarte y recibir pedidos es gratis. Bankai cobra una comisión sólo sobre los trabajos que efectivamente cobrás.</p>
+      </details>
+      <details data-only="socio">
+        <summary>¿Cuánto es la comisión?</summary>
+        <p>10% durante tus primeros tres meses y 13% a partir del cuarto. No hay cuota mensual ni costo fijo: un mes sin trabajos no te cuesta nada.</p>
+      </details>
+      <details data-only="socio">
+        <summary>¿Estoy obligado a aceptar los pedidos?</summary>
+        <p>Nunca. Ves el pedido y decidís si ofertás. Tampoco hay penalidad por no ofertar, ni un algoritmo que te castigue por rechazar.</p>
+      </details>
+      <details data-only="socio">
+        <summary>¿Cuándo cobro?</summary>
+        <p>En el momento. El cliente paga al terminar el trabajo, por el medio que elija. Si es en efectivo lo cobrás en mano y confirmás en la app; si es digital te llega por MercadoPago.</p>
+      </details>
+      <details data-only="socio">
+        <summary>¿Qué pasa si un cliente no me deja entrar o cancela?</summary>
+        <p>Las cancelaciones quedan registradas en el historial del cliente, y las cancelaciones tardías —con vos ya en camino— pesan en su reputación. Si algo se pone incómodo, tenés el botón de emergencia durante todo el servicio.</p>
+      </details>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ CIERRE ══════════════ -->
+<section>
+  <div class="shell">
+    <div class="close-band reveal">
+      <h2 data-only="cliente">Lo que necesitás, resuelto hoy.</h2>
+      <h2 data-only="socio">Tu próximo cliente está a la vuelta.</h2>
+      <p>
+        <span data-only="cliente">Publicar un pedido es gratis y no te compromete a nada. Recibís las ofertas y decidís con calma.</span>
+        <span data-only="socio">Crear tu perfil y verificarte no cuesta nada. Empezás a recibir pedidos el mismo día.</span>
+      </p>
+      <a class="cta" href="#"><span data-only="cliente">Descargar Bankai</span><span data-only="socio">Registrarme como socio</span></a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="shell foot-in">
+    <div class="logo" style="font-size:18px"><span class="glyph" style="width:23px;height:23px;font-size:12px">🔧</span>Bankai</div>
+    <span>Servicios a domicilio · Argentina</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  root.setAttribute('data-mode', 'cliente');
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ── Selector de modo ─────────────────────────────────────── */
+  var switches = document.querySelectorAll('.switch button');
+  switches.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      root.setAttribute('data-mode', btn.getAttribute('data-set'));
+      switches.forEach(function (b) { b.setAttribute('aria-pressed', String(b === btn)); });
+      // Cada modo trae su propio set de preguntas; abrí la primera visible.
+      openFirstFaq();
+    });
+  });
+
+  function openFirstFaq() {
+    var mode = root.getAttribute('data-mode');
+    document.querySelectorAll('details').forEach(function (d) {
+      d.open = d.getAttribute('data-only') === mode && !d.previousElementSibling
+        ? true
+        : d.open && d.getAttribute('data-only') === mode;
+    });
+    var first = document.querySelector('details[data-only="' + mode + '"]');
+    if (first) first.open = true;
+  }
+
+  /* ── Demo del teléfono ────────────────────────────────────── */
+  var steps = document.querySelectorAll('.demo-step');
+  var dots  = document.querySelectorAll('.dots button');
+  var at = 0, timer = null;
+
+  function show(i) {
+    at = i;
+    steps.forEach(function (s, n) {
+      if (n === i) s.setAttribute('data-on', ''); else s.removeAttribute('data-on');
+    });
+    dots.forEach(function (d, n) { d.setAttribute('aria-current', String(n === i)); });
+  }
+  function play() { stop(); timer = setInterval(function () { show((at + 1) % steps.length); }, 3400); }
+  function stop() { if (timer) { clearInterval(timer); timer = null; } }
+
+  dots.forEach(function (d) {
+    d.addEventListener('click', function () {
+      show(Number(d.getAttribute('data-go')));
+      stop(); // Un toque deliberado gana sobre la rotación automática.
+    });
+  });
+  if (!reduced) play();
+
+  /* ── Contadores del hero ──────────────────────────────────── */
+  function runCounter(el) {
+    var target = Number(el.getAttribute('data-count'));
+    var pre = el.getAttribute('data-prefix') || '';
+    var suf = el.getAttribute('data-suffix') || '';
+    if (reduced || target === 0) { el.textContent = pre + target + suf; return; }
+    var t0 = null, dur = 1100;
+    function frame(ts) {
+      if (!t0) t0 = ts;
+      var p = Math.min((ts - t0) / dur, 1);
+      // easeOutCubic
+      var v = Math.round(target * (1 - Math.pow(1 - p, 3)));
+      el.textContent = pre + v + suf;
+      if (p < 1) requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+  document.querySelectorAll('[data-count]').forEach(runCounter);
+
+  /* ── Aparición al hacer scroll ────────────────────────────── */
+  if ('IntersectionObserver' in window && !reduced) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('seen'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('seen'); });
+  }
+
+  /* ── Buscador de rubros ───────────────────────────────────── */
+  // Cada rubro trae los términos con los que la gente lo nombra de verdad,
+  // así "gotera" encuentra Plomería aunque la palabra no esté en el nombre.
+  var CATS = [
+    { n: 'Electricista',      e: '⚡', k: 'tablero luz corto enchufe cable disyuntor térmica instalación electricidad' },
+    { n: 'Plomería',          e: '🔧', k: 'gotera canilla caño pérdida agua destapar inodoro cloaca bomba' },
+    { n: 'Peluquería',        e: '💇', k: 'corte pelo peinado color tintura barba' },
+    { n: 'Manicura',          e: '💅', k: 'uñas esmaltado semipermanente kapping pies pedicura' },
+    { n: 'Pintura',           e: '🎨', k: 'pintar pared techo humedad revoque enduido' },
+    { n: 'Limpieza',          e: '🧹', k: 'limpiar profunda fin de obra alfombras vidrios mudanza' },
+    { n: 'Carpintería',       e: '🪚', k: 'madera mueble placard puerta estante cajón' },
+    { n: 'Jardinería',        e: '🌿', k: 'pasto césped poda plantas riego parque árbol' },
+    { n: 'Aire acondicionado',e: '❄️', k: 'split frío calor carga gas instalación climatización aire' },
+    { n: 'Albañilería',       e: '🔨', k: 'pared ladrillo cemento contrapiso obra revestimiento' },
+    { n: 'Mecánica',          e: '🚗', k: 'auto coche motor batería aceite service neumático' },
+    { n: 'Técnico PC',        e: '💻', k: 'computadora notebook formatear virus wifi router impresora' },
+    { n: 'Instalaciones',     e: '📺', k: 'tv soporte pantalla antena cámara alarma domótica' },
+    { n: 'Paseo de perros',   e: '🐕', k: 'perro paseador mascota caminata cuidado' },
+    { n: 'Masajes',           e: '💆', k: 'masaje descontracturante relajante espalda quiropraxia' },
+    { n: 'Estética',          e: '🧴', k: 'depilación facial cejas pestañas limpieza de cutis' },
+    { n: 'Cerrajería',        e: '🔑', k: 'llave cerradura puerta trabado abrir copia' },
+    { n: 'Fletes',            e: '📦', k: 'mudanza flete camioneta transporte carga traslado' }
+  ];
+
+  var cloud = document.getElementById('cloud');
+  var none  = document.getElementById('none');
+  var q     = document.getElementById('q');
+
+  CATS.forEach(function (c) {
+    var el = document.createElement('span');
+    el.className = 'cat-chip';
+    el.textContent = c.e + ' ' + c.n;
+    el.dataset.hay = (c.n + ' ' + c.k).toLowerCase();
+    cloud.appendChild(el);
+  });
+
+  function filter() {
+    var term = q.value.trim().toLowerCase();
+    var hits = 0;
+    cloud.querySelectorAll('.cat-chip').forEach(function (el) {
+      if (!term) { el.className = 'cat-chip'; return; }
+      var match = el.dataset.hay.indexOf(term) !== -1;
+      el.className = 'cat-chip ' + (match ? 'hit' : 'dim');
+      if (match) hits++;
+    });
+    none.hidden = !term || hits > 0;
+  }
+
+  q.addEventListener('input', filter);
+  document.getElementById('finder').addEventListener('submit', function (e) {
+    e.preventDefault();
+    filter();
+  });
+
+  openFirstFaq();
+})();
+</script>
+
+</body>
+</html>
