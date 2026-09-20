@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAIAAAD8GO2jAAAE3UlEQVR42tVWW2xVRRRde2bOObf3FtrSpsVCK6AgBQpWQAohKBAoUoOooFYETdBEEwQkijFNGvnQoDExPviRqD8UjYkQq0GgEqs/FhWBWmx4BBRrC6VYLr2P85rZflCMpbdEYkhwsr8m56yVvfeavTa5rzi4nkeBcZ0JzHUm4BsrAyEBwOhr6gFdA3oqCQBZMRgN0GU+Azag/5IBEUAcT8qKpSDSB3dSLAqjOZEGARaRFYHhQXpwFQICGBASYcC+by2qsxZuAhAUbQq+fJnyCtXMx8AwJ5tMRwuUjUxYV5UpA0LBTcDKdh6vl+XLgs/WgY219B1RWBY0rLfm1yGS422tQhBCOhmhBi8RAUJxb0IMH+c82UB5N3tb7zGtuwGYs0ed1Q3ipsmcPE92DL1dIILhjAQCjAwBAkuOJ+Sk6sjGn1kH7uaJ+uBuRCKIxvThxvSrZcyG8scAxL4Lc+mXDFCCDa4MSA6NSSZV1YvOU1/olh3um7NMT7sYPxtOLpwcOWsFTOhunhYeqIeQsqLGeMxByJAD0WTtTNW/MgJuCsJ2Vm2z7l4f7Krz6tdac9fIcfOIhLqjhuxsu6rO/HnanDpgWndCB9biTaK4TB9ugJ+CstH/6craStWvMoGmwtsizzbKUZXe+8uDpvcoFkU6qaYs5XQ82PM6uz2UU6x/rJfl1bJ0evD5W9x1yK6qlRXL9LEm9J6H6Fd2WVtpAdQXpDiZthY+L4rLvQ8fNW1fkeOwm1Z31sBLkFDkRM0frabrOKcvqqmPyFvnQMfDAw3m9HeyfAkpR7fsJScLzH9jUmJtVn9pMqwIp+LO/ZuDH+q5+yTZUWTlcqIbXkIUTwIb1gHScXOuXQwfRXkl3NtlzVrtfbqRYrkIXBBdVaZE8D3SDKFE/hg5fQUHnmk/CDfFbtycbEYkW4ycYs6dIseB53LnMTgxRIbCAL4HoisAB8jUABAAwXcpVqBb94RNWyhWIMfeRbklgAApGEORXE57smyBLK8mKwY/TSBAwAyQKQwyBcOOQtiQDuyhlFsS/tJIuSOsxbVixO2UPzqyYZ8onqBmrIQzDMKCM4Q1Z4SSL02zMkwI1jSs1HS2sZcwHW0wxnS2md8PcU+HvfA57u3WLXtUxX3hkUb90y4TbyeS+swxkPh3o4KItcTFc2r8/GDfu2ryEjV7lSgYbc4eD/d/HHz7AdjoE82m+1drxsOUnS9HTQ+PNMLTUM5Aq8g07IjgBdbcZ+TEBXAT9kOv9bVrZLma+gAAhD77KXfLctPTYc1bQ8rx975NSmYcR4MMOwa7SYQ+pIXQh9EQ0lzoDJs/AglIxYkeNfVBa97Tuu1rd9s6OaVan9hPGQky+kHfa2ewsKDsvgxyilRlDSkbAMXyQNLb/oK7/Q1ZWqiKxnKgYdFA28lkmUzQICcbls1dv3nbNnAYqAlzZdkcUXDzpU902zdB8yecOO/c+4QoLecLZxACRmDADkEXV0UH9EDA91TFIlFS7jdu4Z44JEAQeYVybKUYOdF0HA0P7VKTq0TRLWw0/FT4/Q72khAyE8HKaEYT5nQSISiWBWWBATBCnz0PGpCgrCi7KQR91kTRCIS4Jk9mRIaAiHWIILzMqpBlgwjMzAaRIYhccm0wm0FNf1BP1jpT6/95qW+M1fF/v5v+BTgvkh2X8BrFAAAAAElFTkSuQmCC">
+<title>Ayuda — Posta</title>
+<meta name="description" content="Cómo funciona Posta: para quien pide un servicio y para quien lo ofrece." />
+<style>
+  :root {
+    --bg: #FAF6F1;
+    --card: #FFFFFF;
+    --line: #EDE0D4;
+    --ink: #1C1008;
+    --body: #5C4033;
+    --mute: #9B8070;
+    --acento: #C4622D;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--body);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.65;
+  }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 48px 20px 80px; }
+  a { color: var(--acento); }
+  h1 { color: var(--ink); font-size: 2rem; margin: 0 0 6px; letter-spacing: -0.02em; }
+  h2 { color: var(--ink); font-size: 1.15rem; margin: 36px 0 10px; }
+  .fecha { color: var(--mute); font-size: 0.9rem; margin-bottom: 28px; }
+  .volver { display: inline-block; margin-bottom: 24px; font-weight: 600; text-decoration: none; }
+  .card {
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 16px; padding: 20px; margin: 20px 0;
+  }
+  ul { padding-left: 20px; }
+  li { margin-bottom: 8px; }
+  strong { color: var(--ink); }
+  code {
+    background: rgba(196,98,45,0.08); padding: 2px 6px;
+    border-radius: 5px; font-size: 0.92em;
+  }
+</style>
+<style>
+  h3 { color: var(--ink); font-size: 1rem; margin: 0 0 8px; }
+  .card p { margin: 0 0 10px; }
+  .card p:last-child { margin-bottom: 0; }
+  .indice { display: flex; gap: 10px; flex-wrap: wrap; margin: 0 0 8px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="volver" href="./index.html">← Volver a Posta</a>
+
+  <h1>Ayuda</h1>
+  <p class="mute">
+    Esta página dice lo mismo que el centro de ayuda de la aplicación, porque se
+    genera desde ahí.
+  </p>
+
+  <div class="indice">
+    <a href="#cliente">Si pedís un servicio</a>
+    <a href="#socio">Si ofrecés un servicio</a>
+  </div>
+
+  <h2 id="cliente" style="scroll-margin-top:20px"></h2>
+  <h2>Si pedís un servicio</h2>
+  <p class="mute">Cómo funciona Posta y cómo conseguir mejores servicios.</p>
+
+  <div class="card">
+    <h3>📝 Contá bien el problema y vas a recibir mejores precios</h3>
+    <p>Cuanto más claro describís qué pasa, más realistas son las ofertas. "Pierde agua" y "pierde agua abajo de la bacha desde ayer" reciben precios muy distintos.</p>
+    <p>Elegir la subcategoría correcta hace que el pedido le llegue a quien realmente hace ese trabajo.</p>
+  </div>
+
+  <div class="card">
+    <h3>⚖️ La más barata no siempre es la mejor</h3>
+    <p>Al lado de cada precio tenés la calificación del socio y a qué hora llega. Un precio muy por debajo del resto suele significar que entendió otra cosa, y termina en un presupuesto distinto cuando ya está en tu casa.</p>
+    <p>Si un precio te parece raro, preguntale por chat antes de aceptar qué incluye.</p>
+  </div>
+
+  <div class="card">
+    <h3>🔢 Tu código de llegada</h3>
+    <p>Cuando aceptás una oferta, Posta te da 4 dígitos. El socio no los ve.</p>
+    <p>Se los decís recién cuando lo tenés enfrente. Sin ese código no puede marcar que llegó ni empezar el trabajo, así que es tu prueba de que estuvo ahí.</p>
+    <p>No se los mandes por chat antes de que llegue.</p>
+  </div>
+
+  <div class="card">
+    <h3>🧾 Cuando el socio pasa a presupuestar</h3>
+    <p>Algunos trabajos no se pueden cotizar sin verlos. En esos casos el socio oferta sin precio y te pasa el número una vez que está en tu casa.</p>
+    <p>Ese precio lo aceptás vos. Hasta que no lo aceptes, no se cobra nada.</p>
+    <p>El precio orientativo que ves al publicar el pedido es sólo una referencia: no es lo que vas a pagar.</p>
+  </div>
+
+  <div class="card">
+    <h3>💳 Cómo se paga</h3>
+    <p>Podés pagar con tarjeta desde la app o en efectivo al socio.</p>
+    <p>Si pagás en efectivo, los dos tienen que confirmarlo: vos que pagaste y el socio que recibió. Recién ahí el trabajo queda cerrado.</p>
+  </div>
+
+  <div class="card">
+    <h3>🛡️ Si algo sale mal</h3>
+    <p>Desde la pantalla del trabajo podés reportar un problema en cualquier momento.</p>
+    <p>También podés bloquear a alguien para que no vuelva a aparecerte en futuros pedidos.</p>
+    <p>Todos los socios pasaron una verificación de identidad con documento y foto antes de poder trabajar.</p>
+  </div>
+
+  <h2 id="socio" style="scroll-margin-top:20px"></h2>
+  <h2>Si ofrecés un servicio</h2>
+  <p class="mute">Cómo sacarle más a Posta y qué esperan los clientes.</p>
+
+  <div class="card">
+    <h3>💰 Poné el precio contando la comisión</h3>
+    <p>Posta se queda con un porcentaje de cada trabajo: 10% los primeros 3 meses y 13% después. Cuando escribís un precio en una oferta, abajo te aparece cuánto te queda.</p>
+    <p>Con tarjeta, MercadoPago te deposita ya descontado. En efectivo cobrás todo en mano y la comisión te queda como deuda, que saldás desde Ganancias.</p>
+    <p>Es la misma cuenta en los dos casos: lo que te queda es igual.</p>
+  </div>
+
+  <div class="card">
+    <h3>🧾 Cuándo conviene presupuestar</h3>
+    <p>Si no podés saber el precio sin ver el trabajo, ofertá sin precio: eso le avisa al cliente que vas a pasar a ver y presupuestar. No estás obligado a poner un número.</p>
+    <p>Una vez en el domicilio cargás el precio y el cliente lo acepta o lo rechaza. Si lo rechaza, podés pasar otro.</p>
+    <p>Ojo: hasta que el cliente no acepte un precio, no se puede cobrar. Si terminás el trabajo sin precio aceptado, quedás sin poder cobrarlo.</p>
+  </div>
+
+  <div class="card">
+    <h3>🔢 El código de llegada</h3>
+    <p>Cuando llegás al domicilio, la app te pide 4 dígitos. Vos no los ves: te los tiene que decir el cliente.</p>
+    <p>Es lo que prueba que estuviste ahí. Sin el código no podés marcar que llegaste ni empezar el trabajo.</p>
+    <p>Si te equivocás 5 veces seguidas hay que esperar 10 minutos. Pedíselos de nuevo tranquilo en vez de probar.</p>
+  </div>
+
+  <div class="card">
+    <h3>⏱️ Contestá rápido y sé realista con la hora</h3>
+    <p>El cliente ve todas las ofertas juntas y elige. Llegar primero ayuda, pero lo que más pesa es que la hora que pusiste sea la hora a la que realmente llegás.</p>
+    <p>Poner una hora optimista para ganar el trabajo se paga después, en la calificación.</p>
+  </div>
+
+  <div class="card">
+    <h3>⭐ Tu calificación es tu lugar en la lista</h3>
+    <p>Cuando un cliente publica un pedido, Posta les avisa a los socios de la zona ordenados por distancia y calificación, y la calificación pesa más.</p>
+    <p>Un socio bien calificado a 4 km aparece antes que uno mal calificado a 500 metros.</p>
+  </div>
+
+  <div class="card">
+    <h3>🪪 Sin verificar identidad no te llegan pedidos</h3>
+    <p>Mientras no completes la verificación de identidad, los pedidos no te llegan. No es que haya poco trabajo: directamente no aparecés en la búsqueda.</p>
+    <p>No hay nadie revisando tu perfil a mano: lo hacés vos desde tu perfil y tarda un par de minutos.</p>
+    <p>Para gas y electricidad además hace falta la matrícula, y esa sí la mira una persona.</p>
+  </div>
+
+  <div class="card">
+    <h3>🚫 Qué pasa si no pagás la comisión</h3>
+    <p>Las comisiones de los trabajos en efectivo se acumulan como deuda. Si pasan 7 días sin saldarlas, dejás de recibir pedidos hasta ponerte al día.</p>
+    <p>Se salda desde Ganancias, con tarjeta, todo junto.</p>
+  </div>
+
+  <h2>Escribinos</h2>
+  <p>
+    Si algo de esto no te resolvió el problema, escribinos a
+    <a href="mailto:hola@postaservicios.com.ar">hola@postaservicios.com.ar</a>
+    y te contestamos.
+  </p>
+  <p>
+    Para temas de datos personales está la
+    <a href="privacidad.html">política de privacidad</a>, y las condiciones de uso
+    en los <a href="terminos.html">términos y condiciones</a>.
+  </p>
+
+  <p class="mute" style="margin-top:40px">
+    Esta página se genera desde el mismo texto que muestra la aplicación, así que
+    dice exactamente lo que ve alguien usándola.
+  </p>
+</div>
+</body>
+</html>
