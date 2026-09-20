@@ -6,7 +6,7 @@
 <meta name="description" content="Contratá un servicio posta. Posta conecta clientes con prestadores de servicios a domicilio verificados. Publicá lo que necesitás y recibí ofertas de socios de tu zona.">
 <meta name="theme-color" content="#1C1008">
 <meta property="og:title" content="Posta — Contratá un servicio posta">
-<meta property="og:description" content="Contratá un servicio posta. Alguien que sabe, a la puerta de tu casa. Socios con identidad verificada contra RENAPER.">
+<meta property="og:description" content="Contratá un servicio posta. Alguien que sabe, a la puerta de tu casa. Socios con identidad verificada: documento, prueba de vida y foto.">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAIAAAD8GO2jAAAE3UlEQVR42tVWW2xVRRRde2bOObf3FtrSpsVCK6AgBQpWQAohKBAoUoOooFYETdBEEwQkijFNGvnQoDExPviRqD8UjYkQq0GgEqs/FhWBWmx4BBRrC6VYLr2P85rZflCMpbdEYkhwsr8m56yVvfeavTa5rzi4nkeBcZ0JzHUm4BsrAyEBwOhr6gFdA3oqCQBZMRgN0GU+Azag/5IBEUAcT8qKpSDSB3dSLAqjOZEGARaRFYHhQXpwFQICGBASYcC+by2qsxZuAhAUbQq+fJnyCtXMx8AwJ5tMRwuUjUxYV5UpA0LBTcDKdh6vl+XLgs/WgY219B1RWBY0rLfm1yGS422tQhBCOhmhBi8RAUJxb0IMH+c82UB5N3tb7zGtuwGYs0ed1Q3ipsmcPE92DL1dIILhjAQCjAwBAkuOJ+Sk6sjGn1kH7uaJ+uBuRCKIxvThxvSrZcyG8scAxL4Lc+mXDFCCDa4MSA6NSSZV1YvOU1/olh3um7NMT7sYPxtOLpwcOWsFTOhunhYeqIeQsqLGeMxByJAD0WTtTNW/MgJuCsJ2Vm2z7l4f7Krz6tdac9fIcfOIhLqjhuxsu6rO/HnanDpgWndCB9biTaK4TB9ugJ+CstH/6craStWvMoGmwtsizzbKUZXe+8uDpvcoFkU6qaYs5XQ82PM6uz2UU6x/rJfl1bJ0evD5W9x1yK6qlRXL9LEm9J6H6Fd2WVtpAdQXpDiZthY+L4rLvQ8fNW1fkeOwm1Z31sBLkFDkRM0frabrOKcvqqmPyFvnQMfDAw3m9HeyfAkpR7fsJScLzH9jUmJtVn9pMqwIp+LO/ZuDH+q5+yTZUWTlcqIbXkIUTwIb1gHScXOuXQwfRXkl3NtlzVrtfbqRYrkIXBBdVaZE8D3SDKFE/hg5fQUHnmk/CDfFbtycbEYkW4ycYs6dIseB53LnMTgxRIbCAL4HoisAB8jUABAAwXcpVqBb94RNWyhWIMfeRbklgAApGEORXE57smyBLK8mKwY/TSBAwAyQKQwyBcOOQtiQDuyhlFsS/tJIuSOsxbVixO2UPzqyYZ8onqBmrIQzDMKCM4Q1Z4SSL02zMkwI1jSs1HS2sZcwHW0wxnS2md8PcU+HvfA57u3WLXtUxX3hkUb90y4TbyeS+swxkPh3o4KItcTFc2r8/GDfu2ryEjV7lSgYbc4eD/d/HHz7AdjoE82m+1drxsOUnS9HTQ+PNMLTUM5Aq8g07IjgBdbcZ+TEBXAT9kOv9bVrZLma+gAAhD77KXfLctPTYc1bQ8rx975NSmYcR4MMOwa7SYQ+pIXQh9EQ0lzoDJs/AglIxYkeNfVBa97Tuu1rd9s6OaVan9hPGQky+kHfa2ewsKDsvgxyilRlDSkbAMXyQNLb/oK7/Q1ZWqiKxnKgYdFA28lkmUzQICcbls1dv3nbNnAYqAlzZdkcUXDzpU902zdB8yecOO/c+4QoLecLZxACRmDADkEXV0UH9EDA91TFIlFS7jdu4Z44JEAQeYVybKUYOdF0HA0P7VKTq0TRLWw0/FT4/Q72khAyE8HKaEYT5nQSISiWBWWBATBCnz0PGpCgrCi7KQR91kTRCIS4Jk9mRIaAiHWIILzMqpBlgwjMzAaRIYhccm0wm0FNf1BP1jpT6/95qW+M1fF/v5v+BTgvkh2X8BrFAAAAAElFTkSuQmCC">
 <title>Posta — Contratá un servicio posta</title>
@@ -100,6 +100,16 @@ h1, h2, h3, .display {
 /* En pantallas angostas compite con el selector cliente/socio y parte el
    encabezado en dos líneas. El eslogan ya está en el hero y en el título. */
 @media (max-width: 860px) { .eslogan { display: none; } }
+
+.bar-contacto {
+  font-family: "Instrument Sans", sans-serif;
+  font-size: 13.5px; font-weight: 700; color: #fff;
+  background: var(--accent); border-radius: 100px;
+  padding: 8px 17px; white-space: nowrap; text-decoration: none;
+  transition: filter .2s ease;
+}
+.bar-contacto:hover { filter: brightness(1.08); }
+@media (max-width: 520px) { .bar-contacto { padding: 7px 13px; font-size: 12.5px; } }
 
 .switch {
   margin-left: auto; display: flex; padding: 3px; gap: 2px;
@@ -427,6 +437,12 @@ details p { margin: 0 0 20px; color: var(--mute); font-size: 16px; max-width: 66
 }
 .close-band h2 { color: #fff; max-width: 19ch; margin: 0 auto 16px; }
 .close-band p { color: rgba(255,255,255,.85); font-size: 18px; max-width: 52ch; margin: 0 auto 30px; }
+.close-inversor {
+  font-size: 14.5px !important; color: rgba(255,255,255,.72) !important;
+  margin: 22px auto 0 !important;
+}
+.close-inversor a { color: #fff; font-weight: 700; text-decoration: underline; }
+
 .close-band .cta {
   background: var(--ink); color: var(--cream); box-shadow: 0 6px 22px rgba(28,16,8,.28);
 }
@@ -475,6 +491,7 @@ footer { border-top: 1px solid var(--line); padding: 40px 0; font-size: 14px; co
       <button type="button" data-set="cliente" aria-pressed="true">Necesito un servicio</button>
       <button type="button" data-set="socio" aria-pressed="false">Quiero trabajar</button>
     </div>
+    <a class="bar-contacto" href="contacto.html">Contacto</a>
   </div>
 </div>
 
@@ -492,7 +509,7 @@ footer { border-top: 1px solid var(--line); padding: 40px 0; font-size: 14px; co
       <p class="hero-lede">
         <span data-only="cliente">
           Publicás lo que necesitás, los socios de tu zona te mandan su precio,
-          y elegís vos. Todos con identidad verificada contra RENAPER.
+          y elegís vos. Todos con la identidad verificada.
         </span>
         <span data-only="socio">
           Recibís pedidos de tu barrio, ponés tu precio y cobrás como quieras.
@@ -644,7 +661,7 @@ footer { border-top: 1px solid var(--line); padding: 40px 0; font-size: 14px; co
     <div class="steps" data-only="socio">
       <div class="step">
         <h3>Verificá tu identidad</h3>
-        <p>Una selfie y tu DNI. Validamos contra RENAPER. Es lo que hace que un cliente confíe en abrirte la puerta.</p>
+        <p>Una selfie y tu DNI. Verificamos que el documento sea auténtico y que la cara coincida. Es lo que hace que un cliente confíe en abrirte la puerta.</p>
       </div>
       <div class="step">
         <h3>Cargá tus rubros</h3>
@@ -698,7 +715,7 @@ footer { border-top: 1px solid var(--line); padding: 40px 0; font-size: 14px; co
     <div class="shields">
       <div class="shield">
         <div class="mark">🪪</div>
-        <h3>Identidad validada contra RENAPER</h3>
+        <h3>Identidad verificada con documento y foto</h3>
         <p>
           Ningún socio puede recibir pedidos sin pasar por documento, prueba de
           vida y validación contra el registro nacional. La cara frente a la
@@ -755,7 +772,7 @@ footer { border-top: 1px solid var(--line); padding: 40px 0; font-size: 14px; co
     <div class="steps" data-only="cliente">
       <div class="step">
         <h3>Nadie trabaja sin verificarse</h3>
-        <p>No hay excepciones ni per&iacute;odo de gracia. Un socio sin identidad validada contra RENAPER no puede recibir un solo pedido.</p>
+        <p>No hay excepciones ni per&iacute;odo de gracia. Un socio sin la identidad verificada no puede recibir un solo pedido.</p>
       </div>
       <div class="step">
         <h3>Las rese&ntilde;as son de servicios reales</h3>
@@ -831,7 +848,7 @@ footer { border-top: 1px solid var(--line); padding: 40px 0; font-size: 14px; co
       </details>
       <details data-only="cliente">
         <summary>¿Cómo sé que el socio es quien dice ser?</summary>
-        <p>Todos pasan por validación de identidad contra RENAPER: documento, prueba de vida y coincidencia facial. Además, cuando llega a tu casa tenés que darle un código de cuatro dígitos que sólo vos ves, sin el cual no puede iniciar el trabajo.</p>
+        <p>Todos pasan por una verificación de identidad: documento, prueba de vida y coincidencia facial. Además, cuando llega a tu casa tenés que darle un código de cuatro dígitos que sólo vos ves, sin el cual no puede iniciar el trabajo.</p>
       </details>
       <details data-only="cliente">
         <summary>¿Y si el trabajo sale mal?</summary>
@@ -881,7 +898,15 @@ footer { border-top: 1px solid var(--line); padding: 40px 0; font-size: 14px; co
         <span data-only="cliente">Publicar un pedido es gratis y no te compromete a nada. Recibís las ofertas y decidís con calma.</span>
         <span data-only="socio">Crear tu perfil y verificarte no cuesta nada. Empezás a recibir pedidos el mismo día.</span>
       </p>
-      <a class="cta" href="#"><span data-only="cliente">Descargar Posta</span><span data-only="socio">Registrarme como socio</span></a>
+      <a class="cta" href="contacto.html"><span data-only="cliente">Quiero que me avisen</span><span data-only="socio">Quiero sumarme</span></a>
+
+      <!-- El selector de arriba es cliente/socio, y un inversor no es
+           ninguno de los dos: sin esta línea el sitio no le habla a nadie que
+           venga a mirar el proyecto en vez del servicio. -->
+      <p class="close-inversor">
+        ¿Te interesa el proyecto en sí?
+        <a href="contacto.html">Hablemos</a>.
+      </p>
     </div>
   </div>
 </section>
