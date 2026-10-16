@@ -794,7 +794,7 @@ footer { border-top: 1px solid var(--line); padding: 40px 0; font-size: 14px; co
       </div>
       <div class="step">
         <h3>La comisi&oacute;n no sube sola</h3>
-        <p>10% los primeros tres meses, 13% despu&eacute;s. Si alguna vez cambia, te avisamos antes, no con un correo despu&eacute;s.</p>
+        <p>5% los primeros tres meses, 10% despu&eacute;s. Si alguna vez cambia, te avisamos antes, no con un correo despu&eacute;s.</p>
       </div>
     </div>
   </div>
@@ -805,7 +805,7 @@ footer { border-top: 1px solid var(--line); padding: 40px 0; font-size: 14px; co
     <p class="eyebrow">Cuánto queda para vos</p>
     <h2>Sin cuota. Posta cobra sólo si cobrás.</h2>
     <p class="sec-lede">
-      La comisión es 10% durante tus primeros tres meses y 13% después.
+      La comisión es 5% durante tus primeros tres meses y 10% después.
       Moví los controles para ver qué te queda.
     </p>
     <div class="calc" data-only="socio">
@@ -825,10 +825,10 @@ footer { border-top: 1px solid var(--line); padding: 40px 0; font-size: 14px; co
       </div>
       <div class="calc-out">
         <div class="lbl">Te queda por mes</div>
-        <div class="big">$<span id="net">468.000</span></div>
+        <div class="big">$<span id="net">494.000</span></div>
         <div class="calc-line"><span>Facturado</span><b>$<span id="gross">520.000</span></b></div>
-        <div class="calc-line"><span>Comisión Posta (<span id="rate">10</span>%)</span><b>−$<span id="fee">52.000</span></b></div>
-        <p class="calc-note" id="note">Primeros 3 meses con comisión reducida del 10%.</p>
+        <div class="calc-line"><span>Comisión Posta (<span id="rate">5</span>%)</span><b>−$<span id="fee">26.000</span></b></div>
+        <p class="calc-note" id="note">Primeros 3 meses con comisión reducida del 5%.</p>
       </div>
     </div>
   </div>
@@ -868,7 +868,7 @@ footer { border-top: 1px solid var(--line); padding: 40px 0; font-size: 14px; co
       </details>
       <details data-only="socio">
         <summary>¿Cuánto es la comisión?</summary>
-        <p>10% durante tus primeros tres meses y 13% a partir del cuarto. No hay cuota mensual ni costo fijo: un mes sin trabajos no te cuesta nada.</p>
+        <p>5% durante tus primeros tres meses y 10% a partir del cuarto. No hay cuota mensual ni costo fijo: un mes sin trabajos no te cuesta nada.</p>
       </details>
       <details data-only="socio">
         <summary>¿Estoy obligado a aceptar los pedidos?</summary>
@@ -998,6 +998,39 @@ footer { border-top: 1px solid var(--line); padding: 40px 0; font-size: 14px; co
     requestAnimationFrame(frame);
   }
   document.querySelectorAll('[data-count]').forEach(runCounter);
+
+  /* ── Calculadora ──────────────────────────────────────────── */
+  // Se había borrado sin querer el 2026-08-29 y los controles no hacían nada.
+  // Las tasas son las de apps/api/src/common/comision.ts: si cambian allá,
+  // cambian acá y en los textos de esta página.
+  var COMISION_INICIAL = 0.05, COMISION_PLENA = 0.10, MESES_INICIALES = 3;
+  var jobs = document.getElementById('jobs');
+  var ticket = document.getElementById('ticket');
+  var months = document.getElementById('months');
+  if (jobs && ticket && months) {
+    var ar = function (n) { return Math.round(n).toLocaleString('es-AR'); };
+    var pct = function (r) { return String(Math.round(r * 100)); };
+    var recalc = function () {
+      var j = Number(jobs.value), t = Number(ticket.value), m = Number(months.value);
+      // Un mes tiene 4,33 semanas.
+      var gross = j * t * 4.33;
+      var inicial = m <= MESES_INICIALES;
+      var rate = inicial ? COMISION_INICIAL : COMISION_PLENA;
+      var fee = gross * rate;
+      document.getElementById('jobs-v').textContent = j;
+      document.getElementById('ticket-v').textContent = ar(t);
+      document.getElementById('months-v').textContent = m;
+      document.getElementById('gross').textContent = ar(gross);
+      document.getElementById('fee').textContent = ar(fee);
+      document.getElementById('net').textContent = ar(gross - fee);
+      document.getElementById('rate').textContent = pct(rate);
+      document.getElementById('note').textContent = inicial
+        ? 'Primeros 3 meses con comisión reducida del ' + pct(COMISION_INICIAL) + '%.'
+        : 'A partir del cuarto mes la comisión es del ' + pct(COMISION_PLENA) + '%.';
+    };
+    [jobs, ticket, months].forEach(function (el) { el.addEventListener('input', recalc); });
+    recalc();
+  }
 
   /* ── Aparición al hacer scroll ────────────────────────────── */
   if ('IntersectionObserver' in window && !reduced) {
