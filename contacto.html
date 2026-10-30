@@ -75,7 +75,7 @@
   </p>
 
   <div class="card">
-    <form method="POST" action="https://bankai-api-703h.onrender.com/api/v1/contacto">
+    <form id="formulario-de-contacto" method="POST" action="https://bankai-api-703h.onrender.com/api/v1/contacto">
       <label for="tipo">¿Quién sos?</label>
       <select id="tipo" name="tipo">
         <option value="SOCIO">Ofrezco un servicio y quiero sumarme</option>
@@ -117,6 +117,129 @@
     // Despierta la API mientras la persona escribe. La respuesta no se lee
     // (la API no la comparte con otros sitios): alcanza con que el pedido llegue.
     fetch('https://bankai-api-703h.onrender.com/api/v1/health', { mode: 'no-cors', cache: 'no-store' }).catch(function () {});
+  </script>
+  <script>
+/**
+ * Las reglas del formulario de contacto: las mismas que aplica la API
+ * (`apps/api/src/modules/contacto/contacto.dto.ts`), adelantadas al
+ * navegador.
+ *
+ * Así un correo o un teléfono mal escrito se avisa en el campo, antes de
+ * mandar, y no después con la respuesta cruda de la API (2026-10-30: Maxi
+ * probó un correo y un teléfono mal escritos y le apareció el JSON). La API
+ * las sigue aplicando: sin JavaScript, el formulario anda igual que antes.
+ *
+ * `generar-contacto.mjs` pega este archivo adentro de `contacto.html`. La
+ * prueba `formulario-del-sitio.spec.ts` de la API compara cada regla con la de
+ * la API sobre datos absurdos: si cambia una, tiene que cambiar la otra.
+ */
+var reglasDelContacto = (function () {
+  // Al menos una letra o un número: "..." o "🔥🔥" no dicen nada.
+  var DICE_ALGO = /[\p{L}\p{M}\d]/u;
+  // Caracteres de control, que no se escriben con un teclado.
+  // eslint-disable-next-line no-control-regex
+  var CONTROL = /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/;
+  var TELEFONO = /^\+?[\d\s()-]{6,25}$/;
+  var CARACTERES_DE_TELEFONO = /^\+?[\d\s()-]*$/;
+
+  // El control de correo de la API es `isEmail` de validator, con sus
+  // opciones por defecto: lo que va antes de la arroba sin puntos de más, y un
+  // dominio con su terminación de letras ("gmail" solo no alcanza).
+  var PARTE_DEL_USUARIO =
+    /^[a-z\d!#$%&'*+\-/=?^_\x60{|}~¡-퟿豈-﷏ﷰ-￯]+$/i;
+  var TERMINACION =
+    /^([a-z¡-¨ª-퟿豈-﷏ﷰ-￯]{2,}|xn[a-z0-9-]{2,})$/i;
+  var PARTE_DEL_DOMINIO = /^[a-z¡-￿0-9-]+$/i;
+  var ANCHO_COMPLETO = /[！-～]/;
+
+  function esCorreo(v) {
+    var arroba = v.lastIndexOf('@');
+    if (arroba < 1 || v.length > 200) return false;
+    var usuario = v.slice(0, arroba);
+    var dominio = v.slice(arroba + 1).toLowerCase();
+    var partes = dominio.split('.');
+    return (
+      usuario.length <= 64 &&
+      usuario.split('.').every(function (p) {
+        return PARTE_DEL_USUARIO.test(p);
+      }) &&
+      partes.length > 1 &&
+      TERMINACION.test(partes[partes.length - 1]) &&
+      partes.every(function (p) {
+        return (
+          p.length <= 63 &&
+          PARTE_DEL_DOMINIO.test(p) &&
+          !ANCHO_COMPLETO.test(p) &&
+          p[0] !== '-' &&
+          p[p.length - 1] !== '-'
+        );
+      })
+    );
+  }
+
+  function texto(que, valor, minimo, maximo) {
+    var v = valor.trim();
+    if (v.length < minimo || v.length > maximo) {
+      return que + ' tiene que tener entre ' + minimo + ' y ' + maximo + ' letras.';
+    }
+    if (!DICE_ALGO.test(v)) return que + ' tiene que tener alguna palabra.';
+    if (CONTROL.test(v)) return que + ' tiene caracteres que no se pueden guardar.';
+    return '';
+  }
+
+  // Cada una devuelve el aviso, o '' si está bien.
+  return {
+    nombre: function (v) {
+      return texto('El nombre', v, 2, 120);
+    },
+    email: function (v) {
+      return esCorreo(v)
+        ? ''
+        : 'Revisá el correo: no parece una dirección válida. Por ejemplo, ana@gmail.com.';
+    },
+    // Opcional: vacío es "sin teléfono", como en la API.
+    telefono: function (v) {
+      if (v === '' || TELEFONO.test(v)) return '';
+      if (!CARACTERES_DE_TELEFONO.test(v)) {
+        return 'El teléfono sólo puede tener números, espacios y guiones. Por ejemplo, 11 2345-6789.';
+      }
+      return v.length < 6
+        ? 'Al teléfono le faltan números.'
+        : 'El teléfono tiene demasiados números.';
+    },
+    mensaje: function (v) {
+      return texto('El mensaje', v, 5, 3000);
+    },
+  };
+})();
+
+if (typeof document !== 'undefined') {
+  (function () {
+    var form = document.getElementById('formulario-de-contacto');
+    var ids = Object.keys(reglasDelContacto);
+
+    // Al escribir se borra el aviso; se vuelve a mirar al mandar.
+    ids.forEach(function (id) {
+      var campo = document.getElementById(id);
+      campo.addEventListener('input', function () {
+        campo.setCustomValidity('');
+      });
+    });
+
+    form.addEventListener('submit', function (e) {
+      for (var i = 0; i < ids.length; i++) {
+        var campo = document.getElementById(ids[i]);
+        var aviso = reglasDelContacto[ids[i]](campo.value);
+        campo.setCustomValidity(aviso);
+        if (aviso) {
+          e.preventDefault();
+          campo.reportValidity();
+          return;
+        }
+      }
+    });
+  })();
+}
   </script>
   <p class="mute"><a href="https://www.argentina.gob.ar/produccion/defensadelconsumidor/formulario">Defensa de las y los Consumidores. Para reclamos ingrese aquí</a></p>
 </div>
