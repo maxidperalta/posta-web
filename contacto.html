@@ -113,6 +113,11 @@
     Tus datos se usan sólo para responderte: ver la
     <a href="privacidad.html">política de privacidad</a>.
   </p>
+  <script>
+    // Despierta la API mientras la persona escribe. La respuesta no se lee
+    // (la API no la comparte con otros sitios): alcanza con que el pedido llegue.
+    fetch('https://bankai-api-703h.onrender.com/api/v1/health', { mode: 'no-cors', cache: 'no-store' }).catch(function () {});
+  </script>
   <p class="mute"><a href="https://www.argentina.gob.ar/produccion/defensadelconsumidor/formulario">Defensa de las y los Consumidores. Para reclamos ingrese aquí</a></p>
 </div>
 </body>
